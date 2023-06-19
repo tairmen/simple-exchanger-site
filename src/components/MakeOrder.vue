@@ -29,7 +29,7 @@
     </button>
 
     <p class="text-secondary text-center text-xl mb-2">
-      {{ `You get ${getValue} ${getCurrency?.symbol} (min ${getCurrency?.minBuy}, max ${getCurrency?.maxBuy})` }}
+      {{ `You get ${getValue} ${getCurrency?.symbol}` }}
     </p>
 
     <InputField
