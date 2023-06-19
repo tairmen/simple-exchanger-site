@@ -55,6 +55,10 @@
     >
       create order
     </button>
+
+    <p class="text-center text-xl text-secondary h-[20px] w-full">
+      {{ resMsg }}
+    </p>
   </form>
 </template>
 
@@ -94,6 +98,13 @@ const price = computed(() => {
 
 const pendingOrder = ref(false);
 
+const resMsg = ref('');
+
+const setResMsg = (msg) => {
+  resMsg.value = msg;
+  setTimeout(() => resMsg.value = '', 10000);
+};
+
 const createOrder = async () => {
   if (!giveCurrency.value || !getCurrency.value || !telephone.value || !email.value) return;
   pendingOrder.value = true;
@@ -107,7 +118,8 @@ const createOrder = async () => {
       email: email.value,
       telephone: telephone.value.toString(),
     };
-    await api.post('/orders', data);
+    const res = await api.post('/orders', data);
+    setResMsg(res.data.message);
     giveValue.value = '0';
   } catch (e) {
     throw new Error(e);
