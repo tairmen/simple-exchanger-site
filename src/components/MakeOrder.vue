@@ -89,9 +89,16 @@ const telephone = ref('');
 const price = computed(() => {
   if (!ranges.value && !ranges.value.length) return '0';
   let currRange;
-  ranges.value.forEach(item => {
-    if (+giveValue.value >= +item.rangeStart && +giveValue.value <= +item.rangeEnd) currRange = item
-  });
+  if (giveCurrency.value?.name === 'USD') {
+    ranges.value.forEach(item => {
+      if (+giveValue.value >= +item.rangeStart && +giveValue.value <= +item.rangeEnd) currRange = item
+    });
+  } else {
+    ranges.value.forEach(item => {
+      const sumInUSD = +giveValue.value / +item.valueSellUSD;
+      if (sumInUSD >= +item.rangeStart && sumInUSD <= +item.rangeEnd) currRange = item
+    });
+  }
   if (!currRange) return '0';
   return giveCurrency.value?.name === 'USD' ? currRange.valueBuyUSD : currRange.valueSellUSD;
 });
