@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input {
+    border: none;
+    outline: none;
+}
+
+input:focus {
+    border: none;
+    outline: none;
+}
+
