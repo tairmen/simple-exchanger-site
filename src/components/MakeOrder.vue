@@ -5,7 +5,7 @@
       @submit.prevent="createOrder"
   >
     <h1 class="header text-center uppercase text-3xl font-bold text-primary mb-4">
-      Make order
+      Сделать заказ
     </h1>
 
     <h2 class="text-center text-xl text-black mb-4">
@@ -13,10 +13,10 @@
     </h2>
 
     <InputField
-      :label="`You pay ${giveCurrency?.symbol} (min ${giveCurrency?.minSell}, max ${giveCurrency?.maxSell})`"
+      :label="`Вы платите ${giveCurrency?.name} (min ${giveCurrency?.minBuy}, max ${giveCurrency?.maxBuy})`"
       type="sum"
       v-model="giveValue"
-      :placeholder="`sum 0.00 ${giveCurrency?.symbol}`"
+      :placeholder="`Сумма 0.00 ${giveCurrency?.name}`"
       is-required
     />
 
@@ -29,22 +29,22 @@
     </button>
 
     <p class="text-secondary text-center text-xl mb-2">
-      {{ `You get ${getValue} ${getCurrency?.symbol}` }}
+      {{ `Вы получаете ${getValue} ${getCurrency?.name}` }}
     </p>
 
     <InputField
-        label="Your email"
+        label="Ваш email"
         v-model="email"
         type="email"
-        placeholder="Your email"
+        placeholder="Ваш email"
         is-required
     />
 
     <InputField
-        label="Your phone number"
+        label="Ваш номер телефона"
         v-model="telephone"
         type="sum"
-        placeholder="Your phone number"
+        placeholder="Ваш номер телефона"
         is-required
     />
 
@@ -53,10 +53,10 @@
       :disabled="!giveCurrency || !getCurrency || !telephone || !email || pendingOrder"
       class="uppercase mt-2 w-full bg-primary h-[42px] rounded-md text-white text-2xl font-bold hover:bg-secondary active:bg-secondary disabled:bg-gray disabled:text-black"
     >
-      create order
+      Сделать заказ
     </button>
 
-    <p class="text-center text-xl text-secondary h-[20px] w-full">
+    <p class="text-center text-xl text-secondary h-[20px] w-full my-2">
       {{ resMsg }}
     </p>
   </form>
@@ -76,7 +76,7 @@ const getCurrency = ref(null);
 const giveValue = ref('0');
 const getValue = computed(() => {
   if (!currencys.value && !currencys.value.length) return '0';
-  const resultValue = giveCurrency.value?.name === 'USD'
+  const resultValue = giveCurrency.value?.name === 'RUB'
       ? +giveValue.value * +price.value
       : +giveValue.value / +price.value;
   if (!resultValue) return '0.00';
@@ -89,18 +89,18 @@ const telephone = ref('');
 const price = computed(() => {
   if (!ranges.value && !ranges.value.length) return '0';
   let currRange;
-  if (giveCurrency.value?.name === 'USD') {
+  if (giveCurrency.value?.name === 'RUB') {
     ranges.value.forEach(item => {
       if (+giveValue.value >= +item.rangeStart && +giveValue.value <= +item.rangeEnd) currRange = item
     });
   } else {
     ranges.value.forEach(item => {
-      const sumInUSD = +giveValue.value / +item.valueSellUSD;
-      if (sumInUSD >= +item.rangeStart && sumInUSD <= +item.rangeEnd) currRange = item
+      const sumInRUB = +giveValue.value / +item.valueSellUSD;
+      if (sumInRUB >= +item.rangeStart && sumInRUB <= +item.rangeEnd) currRange = item
     });
   }
   if (!currRange) return '0';
-  return giveCurrency.value?.name === 'USD' ? currRange.valueBuyUSD : currRange.valueSellUSD;
+  return giveCurrency.value?.name === 'RUB' ? currRange.valueBuyUSD : currRange.valueSellUSD;
 });
 
 const pendingOrder = ref(false);
@@ -109,7 +109,7 @@ const resMsg = ref('');
 
 const setResMsg = (msg) => {
   resMsg.value = msg;
-  setTimeout(() => resMsg.value = '', 10000);
+  setTimeout(() => resMsg.value = '', 1000000);
 };
 
 const createOrder = async () => {
@@ -163,7 +163,7 @@ onMounted(async () => {
   await getCurrenys();
   await getRanges();
   giveCurrency.value = currencys.value.find(item => item.name === 'UAH');
-  getCurrency.value = currencys.value.find(item => item.name === 'USD');
+  getCurrency.value = currencys.value.find(item => item.name === 'RUB');
 });
 </script>
 

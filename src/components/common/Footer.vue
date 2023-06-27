@@ -1,6 +1,9 @@
 <template>
   <div class="footer flex w-full justify-between border-t-2 border-gray pt-4">
-    <img src="/Logo.png" alt="LOGO_FOOTER" class="w-[194px] h-[39px] logo">
+    <div class="flex h-[64px] items-center header w-full">
+      <img src="/logo.ico" alt="LOGO_HEADER" class="w-[24px] h-[24px] logo">
+      <span class="px-2">True Money Exchange</span>
+    </div>
 
     <div class="flex flex-col w-[105px]">
       <div class="flex items-center mb-4">
@@ -41,5 +44,10 @@
     @media (max-width: 768px) {
       margin-bottom: 12px;
     }
+  }
+
+  .header {
+    font-family: Viga;
+    font-size: 24px;
   }
 </style>
