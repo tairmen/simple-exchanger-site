@@ -122,6 +122,7 @@ const createOrder = async () => {
       currencyToSellId: giveCurrency.value.id,
       currencyToSellName: giveCurrency.value.name,
       value: giveValue.value.toString(),
+      valueSell: getValue.value.toString(),
       email: email.value,
       telephone: telephone.value.toString(),
     };
